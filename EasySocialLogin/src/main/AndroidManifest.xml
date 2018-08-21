@@ -1,0 +1,18 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.webaddicted" >
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        >
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <provider android:authorities="com.facebook.app.FacebookContentProvider466359743713130"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+    </application>
+</manifest>

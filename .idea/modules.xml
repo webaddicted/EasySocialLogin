@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AllInOne.iml" filepath="$PROJECT_DIR$/AllInOne.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EasySocialLogin/onetoall.iml" filepath="$PROJECT_DIR$/EasySocialLogin/onetoall.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "763220436103",
+    "firebase_url": "https://sociallogin-84e92.firebaseio.com",
+    "project_id": "sociallogin-84e92",
+    "storage_bucket": "sociallogin-84e92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763220436103:android:54a9b5f2fb195417",
+        "android_client_info": {
+          "package_name": "com.example.deepaksharma.authgoogle2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763220436103-24tfc2ulqataghiv5sf4tu2308hsukvm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.deepaksharma.authgoogle2",
+            "certificate_hash": "b630cde009cae6332c561fe2a193c77f6ec277fb"
+          }
+        },
+        {
+          "client_id": "763220436103-a1hha5fu19lqn68cskrl4q7oh9adoj0a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.deepaksharma.authgoogle2",
+            "certificate_hash": "f8befa73cdc0434b241bb1f4f61b10ac5a2835b0"
+          }
+        },
+        {
+          "client_id": "763220436103-kephkvu8m7ovgsjb4420hm326aef24jt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUnu4RqFMfFIFr2fMuiwwcb2C09FefQCc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763220436103-kephkvu8m7ovgsjb4420hm326aef24jt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
