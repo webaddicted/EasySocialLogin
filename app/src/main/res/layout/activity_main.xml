@@ -26,7 +26,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Facebook"/>
-
+    <Button
+        android:onClick="onFBShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FB Share"/>
     <Button
         android:onClick="onTwitter"
         android:layout_width="match_parent"
@@ -38,14 +42,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Instagram"/>
-    <Button
-        android:onClick="onFBShare"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="FB Share"/>
+
     <Button
         android:onClick="onLogOut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="LogOut"/>
+
 </LinearLayout>

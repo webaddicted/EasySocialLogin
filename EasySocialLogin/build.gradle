@@ -1,4 +1,20 @@
+
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+//apply plugin: 'com.android.application'
 apply plugin: 'com.android.library'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 android {
     compileSdkVersion 27
@@ -30,7 +46,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
     implementation 'com.facebook.android:facebook-android-sdk:4.20.0'
-//    implementation ('com.twitter.sdk.android:twitter:2.3.2@aar') {
-//        transitive = true;
-//    }
+    implementation('com.twitter.sdk.android:twitter:1.11.0@aar') {
+        transitive = true;
+    }
+    implementation 'com.mcxiaoke.volley:library-aar:1.0.0'
 }

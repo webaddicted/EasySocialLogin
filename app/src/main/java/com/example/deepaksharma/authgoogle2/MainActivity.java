@@ -7,18 +7,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.webaddicted.AppClass;
 import com.example.webaddicted.FBAuth;
 import com.example.webaddicted.FBShare;
 import com.example.webaddicted.GoogleAuth;
+import com.example.webaddicted.TwitterAuth;
+import com.twitter.sdk.android.core.models.User;
 
 public class MainActivity extends AppCompatActivity {
     String TAG = MainActivity.class.getSimpleName();
+    private static final String TWITTER_KEY = "euRoJOFhjuSz0PgiDfm87U5y3";
+    private static final String TWITTER_SECRET = "ZLMmiM3RL9ftD9uenN3tDFu742P1cwJONzllNjC8KpdvNjZuvJ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterAuth.init(MainActivity.this, TWITTER_KEY, TWITTER_SECRET);
         setContentView(R.layout.activity_main);
     }
 
@@ -43,10 +49,22 @@ public class MainActivity extends AppCompatActivity {
 //            FBShare.init(MainActivity.this).shareMultipleImage(bitmaps, "#Deepak_Sharma");
 //
 //        }) ;
-            FBShare.init(MainActivity.this).shareImage(myLogo);
+        FBShare.init(MainActivity.this).shareImage(myLogo);
     }
 
     public void onTwitter(View view) {
+        TwitterAuth.requestLogin(MainActivity.this, new TwitterAuth.onTwitterListener() {
+            @Override
+            public void onSuccess(User user) {
+                String profileImage = user.profileImageUrl.replace("_normal", "");
+                Log.d(TAG, "success: username-> " + user.name+"\n url -> "+profileImage);
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void onInstagram(View view) {
@@ -65,9 +83,8 @@ public class MainActivity extends AppCompatActivity {
                     FBShare.logOut();
                     break;
                 case TWITTER:
-
+                    TwitterAuth.logOut();
                     break;
-
             }
         } else {
             Log.d(TAG, "onLogOut: please Login.");
@@ -87,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
             case FBSHARE:
                 FBShare.activityResult(requestCode, resultCode, data);
                 break;
+            case TWITTER:
+                TwitterAuth.onActivityResult(requestCode, resultCode, data);
+                break;
         }
     }
-
 }

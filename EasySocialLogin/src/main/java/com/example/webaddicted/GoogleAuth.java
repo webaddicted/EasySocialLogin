@@ -40,6 +40,7 @@ public class GoogleAuth{
     private static void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
+
             if (acct.getPhotoUrl() != null) {
                 Log.d(TAG, "handleSignInResult: DisplayName -> " + acct.getDisplayName() +
                         "\n Email Id -> " + acct.getEmail() + "\n Id -> " + acct.getId() +
