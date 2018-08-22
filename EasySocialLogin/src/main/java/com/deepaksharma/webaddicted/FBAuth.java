@@ -1,4 +1,4 @@
-package com.example.webaddicted;
+package com.deepaksharma.webaddicted;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +21,6 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.share.widget.ShareDialog;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONObject;
 

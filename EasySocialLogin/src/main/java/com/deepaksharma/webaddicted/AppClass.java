@@ -1,4 +1,4 @@
-package com.example.webaddicted;
+package com.deepaksharma.webaddicted;
 
 import android.content.Context;
 import android.util.Log;

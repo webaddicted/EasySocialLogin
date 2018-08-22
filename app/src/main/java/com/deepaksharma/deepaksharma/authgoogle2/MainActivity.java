@@ -1,4 +1,4 @@
-package com.example.deepaksharma.authgoogle2;
+package com.deepaksharma.deepaksharma.authgoogle2;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,12 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.webaddicted.AppClass;
-import com.example.webaddicted.FBAuth;
-import com.example.webaddicted.FBShare;
-import com.example.webaddicted.GoogleAuth;
-import com.example.webaddicted.TwitterAuth;
-import com.example.webaddicted.UserModel;
+import com.deepaksharma.webaddicted.AppClass;
+import com.deepaksharma.webaddicted.FBAuth;
+import com.deepaksharma.webaddicted.FBShare;
+import com.deepaksharma.webaddicted.GoogleAuth;
+import com.deepaksharma.webaddicted.TwitterAuth;
+import com.deepaksharma.webaddicted.UserModel;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.twitter.sdk.android.core.models.User;
 

@@ -1,4 +1,4 @@
-package com.example.deepaksharma.authgoogle2;
+package com.deepaksharma.webaddicted;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.deepaksharma.allinone", appContext.getPackageName());
+        assertEquals("com.example.onetoall.test", appContext.getPackageName());
     }
 }

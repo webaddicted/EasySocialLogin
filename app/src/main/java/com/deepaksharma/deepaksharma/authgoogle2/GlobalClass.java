@@ -1,8 +1,8 @@
-package com.example.deepaksharma.authgoogle2;
+package com.deepaksharma.deepaksharma.authgoogle2;
 
 import android.app.Application;
 
-import com.example.webaddicted.AppClass;
+import com.deepaksharma.webaddicted.AppClass;
 
 /**
  * Created by deepaksharma on 20/8/18.

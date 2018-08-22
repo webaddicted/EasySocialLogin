@@ -1,4 +1,4 @@
-package com.example.webaddicted;
+package com.deepaksharma.deepaksharma.authgoogle2;
 
 import org.junit.Test;
 

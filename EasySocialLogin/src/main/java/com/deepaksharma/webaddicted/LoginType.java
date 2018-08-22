@@ -1,4 +1,4 @@
-package com.example.webaddicted;
+package com.deepaksharma.webaddicted;
 
 /**
  * Created by deepaksharma on 20/8/18.
