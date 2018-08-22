@@ -21,6 +21,7 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONObject;
 
@@ -39,8 +40,10 @@ public class FBAuth {
     private static CallbackManager mCallBackManager;
     private static LoginManager loginManager;
     private static ShareDialog shareDialog;
+private static onFBListener mOnFBListener;
 
-    public static void fbLogin(@NonNull final Activity activity) {
+    public static void fbLogin(@NonNull final Activity activity, onFBListener onFBListener) {
+        mOnFBListener = onFBListener;
         AppClass.setLoginType(LoginType.FACEBOOK);
         FacebookSdk.sdkInitialize(activity);
         loginManager = LoginManager.getInstance();
@@ -54,11 +57,13 @@ public class FBAuth {
 
             @Override
             public void onCancel() {
+                mOnFBListener.onFailure("Cancel by user.");
                 Log.d(TAG, "onCancel: Facebook Authentication cancel.");
             }
 
             @Override
             public void onError(FacebookException exception) {
+                mOnFBListener.onFailure(exception.getMessage());
                 Log.d(TAG, "onError: Facebook Authentication error " + exception.getMessage());
             }
         });
@@ -115,16 +120,18 @@ public class FBAuth {
                                     "\n str_birthday -> " + str_birthday +
                                     "\n str_location -> " + str_location +
                                     "\n strPhoto -> " + strPhoto);
+                            UserModel userModel  = new UserModel(str_facebookid, str_facebookname, str_facebookemail,strPhoto,"", str_birthday);
+                            mOnFBListener.onSuccess(userModel);
 //                            fn_profilepic();
 
                         } catch (Exception e) {
+                            mOnFBListener.onFailure(e.getMessage());
                             Log.d(TAG, "onCompleted: " + e.getMessage());
                         }
                     }
                 });
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id, name, email,gender,birthday,location");
-
         request.setParameters(parameters);
         request.executeAsync();
     }
@@ -160,6 +167,11 @@ public class FBAuth {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         return accessToken != null;
     }
+    public interface onFBListener {
+        void onSuccess(UserModel userModel);
 
+        void onFailure(String errorMessage);
+
+    }
 
 }

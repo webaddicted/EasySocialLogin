@@ -14,6 +14,8 @@ import com.example.webaddicted.FBAuth;
 import com.example.webaddicted.FBShare;
 import com.example.webaddicted.GoogleAuth;
 import com.example.webaddicted.TwitterAuth;
+import com.example.webaddicted.UserModel;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.twitter.sdk.android.core.models.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,11 +31,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onGoogle(View view) {
-        GoogleAuth.init(MainActivity.this, getString(R.string.default_web_client_id));
+        GoogleAuth.init(MainActivity.this, getString(R.string.default_web_client_id), new GoogleAuth.onGoogleListener() {
+            @Override
+            public void onSuccess(GoogleSignInAccount acct) {
+                Log.d(TAG, "handleSignInResult: DisplayName -> " + acct.getDisplayName() +
+                        "\n Email Id -> " + acct.getEmail() + "\n Id -> " + acct.getId() +
+                        "\n IdToken -> " + acct.getIdToken() + "\n Photo Url -> " + acct.getPhotoUrl() +
+                        "\n GivenName -> " + acct.getGivenName());
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.d(TAG, "onFailure: "+errorMessage);
+            }
+        });
     }
 
     public void onFacebook(View view) {
-        FBAuth.fbLogin(MainActivity.this);
+        FBAuth.fbLogin(MainActivity.this, new FBAuth.onFBListener() {
+            @Override
+            public void onSuccess(UserModel userModel) {
+                Log.d(TAG, "onCompleted: str_facebookname -> " + userModel.getName()+
+                        "\n str_facebookemail -> " + userModel.emailId +
+                        "\n str_facebookid -> " + userModel.getuId() +
+                        "\n str_birthday -> " + userModel.birthday +
+                        "\n str_location -> "  +
+                        "\n strPhoto -> " + userModel.getImage());
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.d(TAG, "onFailure: "+errorMessage);
+            }
+        });
     }
 
     public void onFBShare(View view) {
