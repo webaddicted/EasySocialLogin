@@ -1,52 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.deepaksharma.deepaksharma.authgoogle2.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <Button
-        android:onClick="onGoogle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="google"/>
-    <Button
-        android:onClick="onFacebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Facebook"/>
-    <Button
-        android:onClick="onFBShare"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="FB Share"/>
-    <Button
-        android:onClick="onTwitter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Twitter"/>
+        <variable
+            name="socialHandler"
+            type="com.deepaksharma.deepaksharma.authgoogle2.ui.SocialHandler" />
+    </data>
 
-    <Button
-        android:onClick="onInstagram"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Instagram"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.deepaksharma.deepaksharma.authgoogle2.ui.SocialActivity">
 
-    <Button
-        android:onClick="onLogOut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="LogOut"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{socialHandler::onGoogle}"
+            android:text="google" />
+
+        <Button
+            android:id="@+id/btn_facebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{socialHandler::onFacebook}"
+            android:text="Facebook" />
+
+        <Button
+            android:id="@+id/btn_fbShare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{socialHandler::onFBShare}"
+            android:text="FB Share" />
+
+        <Button
+            android:id="@+id/btn_twitter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{socialHandler::onTwitter}"
+            android:text="Twitter" />
+
+        <Button
+            android:id="@+id/btn_instagram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{socialHandler::onInstagram}"
+            android:text="Instagram" />
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{socialHandler::onLogOut}"
+            android:text="LogOut" />
+
+    </LinearLayout>
+</layout>

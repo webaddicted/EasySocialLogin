@@ -16,7 +16,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name="com.deepaksharma.deepaksharma.authgoogle2.MainActivity">
+        <activity android:name="com.deepaksharma.deepaksharma.authgoogle2.ui.SocialActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
