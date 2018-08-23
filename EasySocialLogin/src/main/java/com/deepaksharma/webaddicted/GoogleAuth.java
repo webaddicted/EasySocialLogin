@@ -19,7 +19,6 @@ public class GoogleAuth {
     private static String TAG = GoogleAuth.class.getSimpleName();
     private static final int RC_SIGN_IN = 123;
     private static onGoogleListener mOnGoogleListener;
-
     public static void init(Activity activity, String clientId, onGoogleListener onGoogleListener) {
         mOnGoogleListener = onGoogleListener;
         AppClass.setLoginType(LoginType.GOOGLE);
@@ -71,8 +70,6 @@ public class GoogleAuth {
 
     public interface onGoogleListener {
         void onSuccess(GoogleSignInAccount acct);
-
         void onFailure(String errorMessage);
-
     }
 }
