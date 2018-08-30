@@ -10,62 +10,76 @@
             type="com.deepaksharma.deepaksharma.authgoogle2.ui.SocialHandler" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.deepaksharma.deepaksharma.authgoogle2.ui.SocialActivity">
+        android:fillViewport="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_google"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{socialHandler::onGoogle}"
-            android:text="google" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context="com.deepaksharma.deepaksharma.authgoogle2.ui.SocialActivity">
 
-        <Button
-            android:id="@+id/btn_facebook"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{socialHandler::onFacebook}"
-            android:text="Facebook" />
+            <ImageView
+                android:id="@+id/img_user"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_person" />
 
-        <Button
-            android:id="@+id/btn_fbShare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{socialHandler::onFBShare}"
-            android:text="FB Share" />
+            <TextView
+                android:id="@+id/txt_userInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text=""
+                android:textColor="#000000" />
 
-        <Button
-            android:id="@+id/btn_twitter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{socialHandler::onTwitter}"
-            android:text="Twitter" />
+            <Button
+                android:id="@+id/btn_google"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{socialHandler::onGoogle}"
+                android:text="google" />
 
-        <Button
-            android:id="@+id/btn_instagram"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{socialHandler::onInstagram}"
-            android:text="Instagram" />
+            <Button
+                android:id="@+id/btn_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{socialHandler::onFacebook}"
+                android:text="Facebook" />
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{socialHandler::onLogOut}"
-            android:text="LogOut" />
+            <Button
+                android:id="@+id/btn_fbShare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{socialHandler::onFBShare}"
+                android:text="FB Share" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_twitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{socialHandler::onTwitter}"
+                android:text="Twitter" />
+
+            <Button
+                android:id="@+id/btn_instagram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{socialHandler::onInstagram}"
+                android:text="Instagram" />
+
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{socialHandler::onLogOut}"
+                android:text="LogOut" />
+
+        </LinearLayout>
+    </ScrollView>
 </layout>
