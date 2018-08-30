@@ -42,6 +42,7 @@ public class GoogleAuth {
     }
 
     private static void handleSignInResult(GoogleSignInResult result) {
+
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
             mOnGoogleListener.onSuccess(acct);

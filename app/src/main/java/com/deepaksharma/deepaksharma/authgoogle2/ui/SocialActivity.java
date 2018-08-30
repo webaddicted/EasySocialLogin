@@ -36,7 +36,6 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
         activityMainBinding.setSocialHandler(new SocialHandler(this));
         myLogo = ((BitmapDrawable) getResources().getDrawable(R.drawable.deepak)).getBitmap();
     }
-
     @Override
     public void onGoogle() {
         GoogleAuth.init(SocialActivity.this, getString(R.string.default_web_client_id), new GoogleAuth.onGoogleListener() {
@@ -47,9 +46,9 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
                         .crossFade()
                         .into(activityMainBinding.imgUser);
                 activityMainBinding.txtUserInfo.setText("Id -> " + acct.getId() +
-                                "\n\nIdToken -> " + acct.getIdToken() +
-                                "\n\nDisplayName -> " + acct.getDisplayName() +
-                                "\n\nGivenName -> " + acct.getGivenName() +
+                                "\n\nId Token -> " + acct.getIdToken() +
+                                "\n\nDisplay Name -> " + acct.getDisplayName() +
+                                "\n\nGiven Name -> " + acct.getGivenName() +
                                 "\n\nEmail Id -> " + acct.getEmail() +
                                 "\n\nPhoto Url -> " + acct.getPhotoUrl());
             }

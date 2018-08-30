@@ -53,8 +53,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
 
     //noinspection GradleCompatible
-    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+
     implementation project(':EasySocialLogin')
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
     compile('com.twitter.sdk.android:twitter:1.11.0@aar') {
         transitive = true;
     }
