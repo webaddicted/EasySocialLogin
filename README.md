@@ -8,9 +8,13 @@ Android Project with helper library for login through facebook, twitter and goog
 
 
 **I have used following steps:**
-![demo](https://github.com/webaddicted/SocialLogin/blob/master/screenshot/login.png)
-![demo](https://github.com/webaddicted/SocialLogin/blob/master/screenshot/facebook.png)
-![demo](https://github.com/webaddicted/SocialLogin/blob/master/screenshot/home.png)
+![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/home.png)
+![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/google%20plus.png)
+![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/fb.png)
+![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/fb_info.png)
+![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/twitter_info.png)
+
+
 
 Steps Follow : 
 --------------
@@ -19,13 +23,13 @@ Steps Follow :
 
 **Step 2 : create project in developer facebook & app.twitter.com site.**
 
-**Step 4 : get securit key and fill in firebase auth deshboard and also add key in project.**
+**Step 3 : get securit key and fill in firebase auth deshboard and also add key in project.**
 
-**Step 5 : initalize social login library in application class .**
+**Step 4 : initalize social login library in application class .**
 
             AppClass.init(getApplicationContext());
 
-**Step 6 : add dependency in gradle file..**
+**Step 5 : add dependency in gradle file..**
 
         buildscript {
             repositories {
@@ -50,7 +54,7 @@ Steps Follow :
                 }
         }
 
-**Step 7 : Add it in your root build.gradle at the end of repositories:**
+**Step 6 : Add it in your root build.gradle at the end of repositories:**
 
         allprojects {
             repositories {
@@ -188,6 +192,13 @@ Step 7 GOOGLE STEPS -
                             }
                         });
                  }
+                 
+                 @Override
+                public void onFBShare() {
+                    Log.d(TAG, "onFBShare: " + myLogo.toString());
+                    FBShare.init(SocialActivity.this, this).shareImage(myLogo); 
+                 }
+
 
 **On Activity result is same for all**
 
