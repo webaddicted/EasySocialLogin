@@ -21,7 +21,7 @@ import com.deepaksharma.webaddicted.vo.UserModel;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.twitter.sdk.android.core.models.User;
 
-public class SocialActivity extends AppCompatActivity implements SocialLoginListener {
+public class SocialActivity extends AppCompatActivity implements SocialLoginListener, FBShare.FbPostListener {
     String TAG = SocialActivity.class.getSimpleName();
     private static final String TWITTER_KEY = "euRoJOFhjuSz0PgiDfm87U5y3";
     private static final String TWITTER_SECRET = "ZLMmiM3RL9ftD9uenN3tDFu742P1cwJONzllNjC8KpdvNjZuvJ";
@@ -98,8 +98,7 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
 //            FBShare.init(SocialActivity.this).shareMultipleImage(bitmaps, "#Deepak_Sharma");
 //        }) ;
         Log.d(TAG, "onFBShare: " + myLogo.toString());
-        FBShare.init(SocialActivity.this).shareImage(myLogo);
-    }
+        FBShare.init(SocialActivity.this, this).shareImage(myLogo);    }
 
     @Override
     public void onTwitter() {
@@ -172,4 +171,13 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
         }
     }
 
+    @Override
+    public void onFbPostSuccess(String postId) {
+        Log.d(TAG, "onFbPostSuccess: "+postId);
+    }
+
+    @Override
+    public void onFbPostFailure(String error) {
+        Log.d(TAG, "onFbPostFailure: "+error);
+    }
 }

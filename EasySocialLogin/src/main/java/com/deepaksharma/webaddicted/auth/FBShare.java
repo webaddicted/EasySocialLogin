@@ -42,25 +42,30 @@ public class FBShare {
     private static final String TAG = FBShare.class.getSimpleName();
     private static ShareDialog shareDialog;
     private static CallbackManager mCallBackManager;
-    static FBShare fbShare;
+    private static FBShare fbShare;
+    private static FbPostListener mFbPostListener;
 
-    public static FBShare init(@NonNull Activity activity) {
+    public static FBShare init(@NonNull Activity activity, FbPostListener fbPostListener) {
         AppClass.setLoginType(LoginType.FBSHARE);
+        mFbPostListener = fbPostListener;
         shareDialog = new ShareDialog(activity);
         mCallBackManager = CallbackManager.Factory.create();
         shareDialog.registerCallback(mCallBackManager, new FacebookCallback<Sharer.Result>() {
             @Override
             public void onSuccess(Sharer.Result result) {
+                mFbPostListener.onFbPostSuccess(result.getPostId());
                 Log.d(TAG, "onSuccess: result -> " + result.getPostId());
             }
 
             @Override
             public void onCancel() {
+                mFbPostListener.onFbPostFailure("Cancel by user");
                 Log.d(TAG, "onCancel: cancel by user ");
             }
 
             @Override
             public void onError(FacebookException error) {
+                mFbPostListener.onFbPostFailure(error.toString());
                 Log.d(TAG, "onError: share failed -> " + error.toString());
             }
         });
@@ -156,13 +161,13 @@ public class FBShare {
         SharePhotoContent content = new SharePhotoContent.Builder()
                 .addPhoto(shareImage)
                 .setShareHashtag(new ShareHashtag.Builder()
-                .setHashtag(hashTag)
-                .build())
+                        .setHashtag(hashTag)
+                        .build())
                 .build();
         shareDialog.show(content);
     }
 
-    public static void shareImageCaptionHashTag(Uri uri,String caption, String hashTag) {
+    public static void shareImageCaptionHashTag(Uri uri, String caption, String hashTag) {
         SharePhoto shareImage = new SharePhoto.Builder()
                 .setImageUrl(uri)
                 .setCaption(caption)
@@ -210,7 +215,7 @@ public class FBShare {
         shareDialog.show(content);
     }
 
-    public static void shareImageCaptionHashTag(Bitmap bitmap,String caption, String hashTag) {
+    public static void shareImageCaptionHashTag(Bitmap bitmap, String caption, String hashTag) {
         SharePhoto shareImage = new SharePhoto.Builder()
                 .setBitmap(bitmap)
                 .setCaption(caption)
@@ -289,4 +294,9 @@ public class FBShare {
         return accessToken != null;
     }
 
+    public interface FbPostListener {
+        void onFbPostSuccess(String postId);
+
+        void onFbPostFailure(String error);
+    }
 }
