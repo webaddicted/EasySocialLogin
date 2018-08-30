@@ -1,4 +1,4 @@
-package com.deepaksharma.webaddicted;
+package com.deepaksharma.webaddicted.vo;
 
 /**
  * Created by deepaksharma on 22/8/18.

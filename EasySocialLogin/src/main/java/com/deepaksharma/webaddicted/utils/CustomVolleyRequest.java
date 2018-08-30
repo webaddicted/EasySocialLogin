@@ -1,4 +1,4 @@
-package com.deepaksharma.webaddicted;
+package com.deepaksharma.webaddicted.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

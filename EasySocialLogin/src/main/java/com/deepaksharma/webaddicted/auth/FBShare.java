@@ -1,4 +1,4 @@
-package com.deepaksharma.webaddicted;
+package com.deepaksharma.webaddicted.auth;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.Log;
 
+import com.deepaksharma.webaddicted.utils.AppClass;
+import com.deepaksharma.webaddicted.utils.LoginType;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;

@@ -1,4 +1,4 @@
-package com.deepaksharma.webaddicted;
+package com.deepaksharma.webaddicted.auth;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,9 @@ import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
+
+import com.deepaksharma.webaddicted.utils.AppClass;
+import com.deepaksharma.webaddicted.utils.LoginType;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -26,7 +29,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class TwitterAuth {
     private static final String TAG = TwitterAuth.class.getSimpleName();
-      public static final String KEY_USERNAME = "username";
+    public static final String KEY_USERNAME = "username";
     public static final String KEY_PROFILE_IMAGE_URL = "image_url";
     private static TwitterAuthClient client;
     private static onTwitterListener mOnTwitterListener;
@@ -71,27 +74,33 @@ public class TwitterAuth {
 
                     @Override
                     public void success(Result<User> userResult) {
-                        User user = userResult.data;
-                        mOnTwitterListener.onSuccess(userResult.data);
-                        String profileImage = user.profileImageUrl.replace("_normal", "");
-                        Log.d(TAG, "success: username-> " + username + "\nprofileImage-> " + profileImage + "\n emailid -> " + user.email);
+                        requestEmail(userResult);
 
                     }
                 });
-//        TwitterAuthClient.requestEmail(session, new com.twitter.sdk.android.core.Callback<String>() {
-//            @Override
-//            public void success(Result<String> emailResult) {
-//                String email = emailResult.data;
-//                // ...
-//            }
-//
-//            @Override
-//            public void failure(TwitterException e) {
-//                callback.onTwitterSignInFailed(e);
-//            }
-//        });
-    }
 
+    }
+    private static void requestEmail(final Result<User> userResult) {
+        TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
+        client.requestEmail(twitterSession, new Callback<String>() {
+            @Override
+            public void success(Result<String> emailResult) {
+                String email = emailResult.data;
+                User user = userResult.data;
+                mOnTwitterListener.onSuccess(userResult.data, email);
+                String profileImage = user.profileImageUrl.replace("_normal", "");
+                Log.d(TAG, "success: username-> " +user.name +
+                        "\nprofileImage-> " + profileImage +
+                        "\nemailid -> " + user.email+
+                "\nemail -> "+email);
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+                mOnTwitterListener.onFailure(e.getMessage());
+            }
+        });
+    }
     public static boolean logOut() {
         TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
         if (twitterSession != null) {
@@ -120,7 +129,7 @@ public class TwitterAuth {
     }
 
     public interface onTwitterListener {
-        void onSuccess(User data);
+        void onSuccess(User data, String email);
 
         void onFailure(String message);
     }

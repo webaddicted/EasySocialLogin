@@ -1,4 +1,4 @@
-package com.deepaksharma.webaddicted;
+package com.deepaksharma.webaddicted.auth;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,10 @@ import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.Log;
 
+import com.deepaksharma.webaddicted.utils.AppClass;
+import com.deepaksharma.webaddicted.vo.FbResponse;
+import com.deepaksharma.webaddicted.utils.LoginType;
+import com.deepaksharma.webaddicted.vo.UserModel;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -21,9 +25,11 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.share.widget.ShareDialog;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Modifier;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -39,7 +45,7 @@ public class FBAuth {
     private static CallbackManager mCallBackManager;
     private static LoginManager loginManager;
     private static ShareDialog shareDialog;
-private static onFBListener mOnFBListener;
+    private static onFBListener mOnFBListener;
 
     public static void fbLogin(@NonNull final Activity activity, onFBListener onFBListener) {
         mOnFBListener = onFBListener;
@@ -74,67 +80,26 @@ private static onFBListener mOnFBListener;
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        String str_facebookname, str_facebookemail, str_facebookid,
-                                str_birthday, str_location, strPhoto = null;
-                        try {
-                            Log.e("object", object.toString());
-                            str_facebookname = object.getString("name");
-
-                            try {
-                                str_facebookemail = object.getString("email");
-                            } catch (Exception e) {
-                                str_facebookemail = "";
-                                e.printStackTrace();
-                            }
-                            try {
-                                str_facebookid = object.getString("id");
-                            } catch (Exception e) {
-                                str_facebookid = "";
-                                e.printStackTrace();
-                            }
-                            try {
-                                str_birthday = object.getString("birthday");
-                            } catch (Exception e) {
-                                str_birthday = "";
-                                e.printStackTrace();
-                            }
-
-                            try {
-                                JSONObject jsonobject_location = object.getJSONObject("location");
-                                str_location = jsonobject_location.getString("name");
-
-                            } catch (Exception e) {
-                                str_location = "";
-                                e.printStackTrace();
-                            }
-//                            try {
-//                                strPhoto = object.getString("user_photos");
-//                            } catch (Exception e) {
-//                                strPhoto = "";
-//                                e.printStackTrace();
-//                            }
-                            Log.d(TAG, "onCompleted: str_facebookname -> " + str_facebookname +
-                                    "\n str_facebookemail -> " + str_facebookemail +
-                                    "\n str_facebookid -> " + str_facebookid +
-                                    "\n str_birthday -> " + str_birthday +
-                                    "\n str_location -> " + str_location +
-                                    "\n strPhoto -> " + strPhoto);
-                            UserModel userModel  = new UserModel(str_facebookid, str_facebookname, str_facebookemail,strPhoto,"", str_birthday);
+                        FbResponse fbResponse = fromJson(object.toString(), FbResponse.class);
+                            Log.d(TAG, "onCompleted: str_facebookname -> " + fbResponse.getName() +
+                                    "\n str_facebookemail -> " + fbResponse.getEmail() +
+                                    "\n str_facebookid -> " + fbResponse.getId() +
+                                    "\n str_birthday -> " + fbResponse.getBirthday() +
+                                    "\n strPhoto -> " + fbResponse.getPicture().getData().getUrl());
+                            UserModel userModel = new UserModel(fbResponse.getId(), fbResponse.getName(), fbResponse.getEmail(), fbResponse.getPicture().getData().getUrl(), "", fbResponse.getBirthday());
                             mOnFBListener.onSuccess(userModel);
-//                            fn_profilepic();
-
-                        } catch (Exception e) {
-                            mOnFBListener.onFailure(e.getMessage());
-                            Log.d(TAG, "onCompleted: " + e.getMessage());
-                        }
                     }
                 });
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id, name, email,gender,birthday,location");
+        parameters.putString("fields", "id, name,first_name,last_name,email,gender,birthday,picture");
         request.setParameters(parameters);
         request.executeAsync();
     }
-
+    public static <T> T fromJson(String json, Class<T> clazz) {
+        return new GsonBuilder()
+                .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
+                .create().fromJson(json, clazz);
+    }
     public static void activityResult(@NonNull int requestCode, @NonNull int resultCode, @NonNull Intent data) {
         mCallBackManager.onActivityResult(requestCode, resultCode, data);
     }
@@ -166,6 +131,7 @@ private static onFBListener mOnFBListener;
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         return accessToken != null;
     }
+
     public interface onFBListener {
         void onSuccess(UserModel userModel);
 

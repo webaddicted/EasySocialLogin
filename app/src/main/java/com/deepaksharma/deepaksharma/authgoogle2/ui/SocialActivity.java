@@ -7,17 +7,16 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.deepaksharma.deepaksharma.authgoogle2.R;
 import com.deepaksharma.deepaksharma.authgoogle2.databinding.ActivityMainBinding;
-import com.deepaksharma.webaddicted.AppClass;
-import com.deepaksharma.webaddicted.FBAuth;
-import com.deepaksharma.webaddicted.FBShare;
-import com.deepaksharma.webaddicted.GoogleAuth;
-import com.deepaksharma.webaddicted.TwitterAuth;
-import com.deepaksharma.webaddicted.UserModel;
+import com.deepaksharma.webaddicted.utils.AppClass;
+import com.deepaksharma.webaddicted.auth.FBAuth;
+import com.deepaksharma.webaddicted.auth.FBShare;
+import com.deepaksharma.webaddicted.auth.GoogleAuth;
+import com.deepaksharma.webaddicted.auth.TwitterAuth;
+import com.deepaksharma.webaddicted.vo.UserModel;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.twitter.sdk.android.core.models.User;
 
@@ -94,7 +93,7 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
     public void onTwitter() {
         TwitterAuth.requestLogin(SocialActivity.this, new TwitterAuth.onTwitterListener() {
             @Override
-            public void onSuccess(User user) {
+            public void onSuccess(User user, String email) {
                 String profileImage = user.profileImageUrl.replace("_normal", "");
                 Log.d(TAG, "success: username-> " + user.name + "\n url -> " + profileImage);
             }
