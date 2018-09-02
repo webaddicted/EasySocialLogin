@@ -142,7 +142,7 @@ Step 7 GOOGLE STEPS -
                  }
              }
 
-  ## Same step for FACEBOOK ur TWITTER
+  ## Same step for FACEBOOK FBSHARE & TWITTER
 
            public void facebookLogin(View v) {
               FBAuth.fbLogin(SocialActivity.this, new FBAuth.onFBListener() {
