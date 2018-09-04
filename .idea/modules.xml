@@ -4,7 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AllInOne.iml" filepath="$PROJECT_DIR$/AllInOne.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/EasySocialLogin.iml" filepath="$PROJECT_DIR$/.idea/EasySocialLogin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/EasySocialLogin.iml" filepath="$PROJECT_DIR$/.idea/EasySocialLogin.iml" />
       <module fileurl="file://$PROJECT_DIR$/EasySocialLogin/EasySocialLogin-EasySocialLogin.iml" filepath="$PROJECT_DIR$/EasySocialLogin/EasySocialLogin-EasySocialLogin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EasySocialLogin/EasySocialLogin-EasySocialLogin.iml" filepath="$PROJECT_DIR$/EasySocialLogin/EasySocialLogin-EasySocialLogin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/EasySocialLogin/onetoall.iml" filepath="$PROJECT_DIR$/EasySocialLogin/onetoall.iml" />
     </modules>

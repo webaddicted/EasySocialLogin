@@ -11,6 +11,7 @@ import android.webkit.CookieSyncManager;
 
 import com.deepaksharma.webaddicted.utils.AppClass;
 import com.deepaksharma.webaddicted.utils.LoginType;
+import com.deepaksharma.webaddicted.vo.UserModel;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -81,18 +82,20 @@ public class TwitterAuth {
 
     }
     private static void requestEmail(final Result<User> userResult) {
-        TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
+        final TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
         client.requestEmail(twitterSession, new Callback<String>() {
             @Override
             public void success(Result<String> emailResult) {
                 String email = emailResult.data;
                 User user = userResult.data;
-                mOnTwitterListener.onSuccess(userResult.data, email);
+//                mOnTwitterListener.onSuccess(userResult.data, email);
                 String profileImage = user.profileImageUrl.replace("_normal", "");
+                UserModel userModel = new UserModel(user.getId()+"", twitterSession.getAuthToken().token,user.name, email, profileImage, "", "");
                 Log.d(TAG, "success: username-> " +user.name +
                         "\nprofileImage-> " + profileImage +
                         "\nemailid -> " + user.email+
                 "\nemail -> "+email);
+                mOnTwitterListener.onSuccess(userModel);
             }
 
             @Override
@@ -129,8 +132,8 @@ public class TwitterAuth {
     }
 
     public interface onTwitterListener {
-        void onSuccess(User data, String email);
-
         void onFailure(String message);
+
+        void onSuccess(UserModel userModel);
     }
 }

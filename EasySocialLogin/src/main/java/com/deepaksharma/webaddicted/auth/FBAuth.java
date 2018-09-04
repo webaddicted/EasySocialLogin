@@ -58,6 +58,7 @@ public class FBAuth {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 handleFacebookAccessToken(loginResult.getAccessToken());
+                Log.d(TAG, "onSuccess: loginResult.getAccessToken() -> "+loginResult.getAccessToken());
             }
 
             @Override
@@ -74,24 +75,26 @@ public class FBAuth {
         });
     }
 
-    private static void handleFacebookAccessToken(@NonNull AccessToken token) {
-        Log.d(TAG, "handleFacebookAccessToken: " + token);
+    private static void handleFacebookAccessToken(@NonNull final AccessToken token) {
         GraphRequest request = GraphRequest.newMeRequest(token,
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
+//                        Log.d(TAG, "onCompleted: "+object);
                         FbResponse fbResponse = fromJson(object.toString(), FbResponse.class);
+
                             Log.d(TAG, "onCompleted: str_facebookname -> " + fbResponse.getName() +
                                     "\n str_facebookemail -> " + fbResponse.getEmail() +
                                     "\n str_facebookid -> " + fbResponse.getId() +
                                     "\n str_birthday -> " + fbResponse.getBirthday() +
                                     "\n strPhoto -> " + fbResponse.getPicture().getData().getUrl());
-                            UserModel userModel = new UserModel(fbResponse.getId(), fbResponse.getName(), fbResponse.getEmail(), fbResponse.getPicture().getData().getUrl(), "", fbResponse.getBirthday());
+                            UserModel userModel = new UserModel(fbResponse.getId(), token.getToken(),fbResponse.getName(), fbResponse.getEmail(), fbResponse.getPicture().getData().getUrl(), "", fbResponse.getBirthday());
                             mOnFBListener.onSuccess(userModel);
                     }
                 });
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id, name,first_name,last_name,email,gender,birthday,picture");
+//        parameters.putString("fields", "id, name,first_name,last_name,email,gender,birthday,picture");
+        parameters.putString("fields", "id,name,first_name,last_name,gender,birthday,email,cover,picture.type(large),photos");
         request.setParameters(parameters);
         request.executeAsync();
     }
