@@ -9,7 +9,8 @@ Android Project with helper library for login through facebook, twitter and goog
 
 **I have used following steps:**
 ![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/home.png)
-![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/google%20plus.png)
+![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/google.png)
+![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/google_info.png)
 ![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/fb.png)
 ![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/fb_info.png)
 ![demo](https://github.com/webaddicted/EasySocialLogin/blob/master/screenshot/twitter_info.png)

@@ -80,7 +80,6 @@ public class FBShare {
         if (ShareDialog.canShow(ShareLinkContent.class)) {
             ShareLinkContent shareContent = new ShareLinkContent.Builder()
                     .setContentUrl(Uri.parse(link))
-
                     .build();
             shareDialog.show(shareContent);
         }

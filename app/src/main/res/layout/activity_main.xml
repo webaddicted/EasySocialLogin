@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="socialHandler"
             type="com.deepaksharma.deepaksharma.authgoogle2.ui.SocialHandler" />
@@ -65,6 +64,12 @@
                 android:layout_height="wrap_content"
                 android:onClick="@{socialHandler::onTwitter}"
                 android:text="Twitter" />
+            <Button
+                android:id="@+id/btn_twitterShare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{socialHandler::onTwitterShare}"
+                android:text="Twitter Share" />
 
             <Button
                 android:id="@+id/btn_instagram"

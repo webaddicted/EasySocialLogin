@@ -6,12 +6,14 @@ import android.util.Log;
 
 import com.deepaksharma.webaddicted.utils.AppClass;
 import com.deepaksharma.webaddicted.utils.LoginType;
+import com.deepaksharma.webaddicted.vo.UserModel;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.twitter.sdk.android.core.models.User;
 
 /**
  * Created by deepaksharma on 20/8/18.
@@ -45,12 +47,13 @@ public class GoogleAuth {
 
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
-            mOnGoogleListener.onSuccess(acct);
             if (acct.getPhotoUrl() != null) {
+                UserModel userModel = new UserModel(acct.getId()+"", acct.getIdToken(), acct.getDisplayName(), acct.getEmail(), acct.getPhotoUrl().toString(), "", "");
                 Log.d(TAG, "handleSignInResult: DisplayName -> " + acct.getDisplayName() +
                         "\n Email Id -> " + acct.getEmail() + "\n Id -> " + acct.getId() +
                         "\n IdToken -> " + acct.getIdToken() + "\n Photo Url -> " + acct.getPhotoUrl() +
                         "\n GivenName -> " + acct.getGivenName());
+                mOnGoogleListener.onSuccess(userModel);
             }
         } else {
             mOnGoogleListener.onFailure("Auth failed");
@@ -72,7 +75,7 @@ public class GoogleAuth {
     }
 
     public interface onGoogleListener {
-        void onSuccess(GoogleSignInAccount acct);
+        void onSuccess(UserModel userModel);
         void onFailure(String errorMessage);
     }
 }

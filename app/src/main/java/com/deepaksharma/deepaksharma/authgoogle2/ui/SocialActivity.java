@@ -1,5 +1,6 @@
 package com.deepaksharma.deepaksharma.authgoogle2.ui;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
@@ -9,30 +10,29 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.deepaksharma.deepaksharma.authgoogle2.R;
 import com.deepaksharma.deepaksharma.authgoogle2.databinding.ActivityMainBinding;
+import com.deepaksharma.deepaksharma.authgoogle2.utils.SocialConstant;
+import com.deepaksharma.deepaksharma.authgoogle2.utils.Utilities;
 import com.deepaksharma.webaddicted.utils.AppClass;
 import com.deepaksharma.webaddicted.auth.FBAuth;
 import com.deepaksharma.webaddicted.auth.FBShare;
 import com.deepaksharma.webaddicted.auth.GoogleAuth;
 import com.deepaksharma.webaddicted.auth.TwitterAuth;
 import com.deepaksharma.webaddicted.vo.UserModel;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.twitter.sdk.android.core.models.User;
 
 public class SocialActivity extends AppCompatActivity implements SocialLoginListener, FBShare.FbPostListener {
     String TAG = SocialActivity.class.getSimpleName();
-    private static final String TWITTER_KEY = "euRoJOFhjuSz0PgiDfm87U5y3";
-    private static final String TWITTER_SECRET = "ZLMmiM3RL9ftD9uenN3tDFu742P1cwJONzllNjC8KpdvNjZuvJ";
     ActivityMainBinding activityMainBinding;
+    SocialViewModel socialViewModel;
     Bitmap myLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TwitterAuth.init(SocialActivity.this, TWITTER_KEY, TWITTER_SECRET);
+        TwitterAuth.init(SocialActivity.this, SocialConstant.TWITTER_KEY, SocialConstant.TWITTER_SECRET);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        socialViewModel = ViewModelProviders.of(this).get(SocialViewModel.class);
         activityMainBinding.setSocialHandler(new SocialHandler(this));
         myLogo = ((BitmapDrawable) getResources().getDrawable(R.drawable.deepak)).getBitmap();
     }
@@ -41,18 +41,8 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
     public void onGoogle() {
         GoogleAuth.init(SocialActivity.this, getString(R.string.default_web_client_id), new GoogleAuth.onGoogleListener() {
             @Override
-            public void onSuccess(GoogleSignInAccount acct) {
-                Glide.with(SocialActivity.this).load(acct.getPhotoUrl())
-                        .thumbnail(0.5f)
-                        .crossFade()
-                        .into(activityMainBinding.imgUser);
-                activityMainBinding.txtUserInfo.setText(
-                        "\n\nDisplay Name -> " + acct.getDisplayName() +
-                                "\n\nGiven Name -> " + acct.getGivenName() +
-                                "\n\nEmail Id -> " + acct.getEmail() +
-                                "\n\nPhoto Url -> " + acct.getPhotoUrl() +
-                                "\n\nId -> " + acct.getId() +
-                                "\n\nId Token -> " + acct.getIdToken());
+            public void onSuccess(UserModel userModel) {
+                socialViewModel.loginInfo(activityMainBinding, userModel);
             }
 
             @Override
@@ -68,17 +58,7 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
         FBAuth.fbLogin(SocialActivity.this, new FBAuth.onFBListener() {
             @Override
             public void onSuccess(UserModel userModel) {
-                Glide.with(SocialActivity.this).load(userModel.getImage())
-                        .thumbnail(0.5f)
-                        .crossFade()
-                        .into(activityMainBinding.imgUser);
-                activityMainBinding.txtUserInfo.setText(
-                        "\n\nFacebook name -> " + userModel.getName() +
-                                "\n\nFacebook email -> " + userModel.emailId +
-                                "\n\nFacebook birthday -> " + userModel.birthday +
-                                "\n\nFacebook Photo -> " + userModel.getImage() +
-                                "\n\nFacebookid -> " + userModel.getuId() +
-                                "\n\nFacebook token -> " + userModel.getAccess_token());
+                socialViewModel.loginInfo(activityMainBinding, userModel);
             }
 
             @Override
@@ -91,6 +71,7 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
 
     @Override
     public void onFBShare() {
+        if(FBAuth.isLoggedIn()) {
 //        FBShare.init(SocialActivity.this).shareLink("https://github.com/webaddicted");
 //        FBShare.init(SocialActivity.this).shareLink("https://github.com/webaddicted", "#DEEPAK_SHARMA");
 //        new Handler().post(() -> {
@@ -101,28 +82,18 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
 //            Log.d(TAG, "onFBShare: "+myLogo.toString());
 //            FBShare.init(SocialActivity.this).shareMultipleImage(bitmaps, "#Deepak_Sharma");
 //        }) ;
-        Log.d(TAG, "onFBShare: " + myLogo.toString());
-        FBShare.init(SocialActivity.this, this).shareImage(myLogo);
+            Log.d(TAG, "onFBShare: " + myLogo.toString());
+            FBShare.init(SocialActivity.this, this).shareImage(myLogo);
+        }else
+            Utilities.showToast("First login on facebook.");
     }
 
     @Override
     public void onTwitter() {
         TwitterAuth.requestLogin(SocialActivity.this, new TwitterAuth.onTwitterListener() {
             @Override
-            public void onSuccess(UserModel user) {
-
-                Log.d(TAG, "success: username-> " + user.getName() + "\n url -> " + user.getImage());
-                Glide.with(SocialActivity.this).load(user.getImage())
-                        .thumbnail(0.5f)
-                        .crossFade()
-                        .into(activityMainBinding.imgUser);
-                activityMainBinding.txtUserInfo.setText(
-                        "\nName -> " + user.getName() +
-                                "\n\nEmail -> " + user.getEmailId() +
-                                "\n\nEmail -> " + user.getEmailId() +
-                                "\n\nPhoto -> " + user.getImage() +
-                                "\n\nid -> " + user.getuId() +
-                                "\n\nAccess_token -> " + user.getAccess_token());
+            public void onSuccess(UserModel userModel) {
+                socialViewModel.loginInfo(activityMainBinding, userModel);
             }
 
             @Override
@@ -131,6 +102,11 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
                 Toast.makeText(SocialActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onTwitterShare() {
+
     }
 
     @Override

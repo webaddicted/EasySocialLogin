@@ -7,8 +7,10 @@ import android.os.Build;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.Toast;
 
 
+import com.deepaksharma.webaddicted.R;
 import com.deepaksharma.webaddicted.utils.AppClass;
 import com.deepaksharma.webaddicted.utils.LoginType;
 import com.deepaksharma.webaddicted.vo.UserModel;
@@ -20,7 +22,9 @@ import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.models.User;
+import com.twitter.sdk.android.core.services.StatusesService;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -135,5 +139,33 @@ public class TwitterAuth {
         void onFailure(String message);
 
         void onSuccess(UserModel userModel);
+    }
+
+    public static void sharePost(){
+
+//        StatusesService statusesService = TwitterCore.getInstance().getApiClient().getStatusesService();//statusesService;
+//        statusesService.up();
+//        statusesService.update(message, null, null, null, null, null, null, null, null)
+//                .enqueue(object : Callback<Tweet>() {
+//            override fun success(result: Result<Tweet>) {
+//                Toast.makeText(context, R.string.tweet_posted,Toast.LENGTH_SHORT).show()
+//            }
+//
+//            override  fun failure(exception: TwitterException) {
+//                Toast.makeText(context,exception.localizedMessage,Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//        postEditText.setText("")
+
+//        TwitterSession twitt = new Twitt_Sharing(MainActivity.this,
+//                consumer_key, secret_key);
+//        string_img_url = "http://3.bp.blogspot.com/_Y8u09A7q7DU/S-o0pf4EqwI/AAAAAAAAFHI/PdRKv8iaq70/s1600/id-do-anything-logo.jpg";
+//        string_msg = "https://chintankhetiya.wordpress.com/";
+//        // here we have web url image so we have to make it as file to
+//        // upload
+//        String_to_File(string_img_url);
+//        // Now share both message & image to sharing activity
+//        twitt.shareToTwitter(string_msg, casted_image);
+
     }
 }

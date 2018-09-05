@@ -29,6 +29,10 @@ public class SocialHandler {
         mSocialLoginListener.onTwitter();
     }
 
+    public void onTwitterShare(View v) {
+        mSocialLoginListener.onTwitterShare();
+    }
+
     public void onInstagram(View v) {
         mSocialLoginListener.onInstagram();
     }

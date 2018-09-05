@@ -13,7 +13,10 @@ public interface SocialLoginListener {
 
     void onTwitter();
 
+    void onTwitterShare();
+
     void onInstagram();
 
     void onLogOut();
+
 }
