@@ -2,9 +2,8 @@ package com.deepaksharma.deepaksharma.authgoogle2.ui;
 
 import android.arch.lifecycle.ViewModel;
 
-import com.bumptech.glide.Glide;
 import com.deepaksharma.deepaksharma.authgoogle2.databinding.ActivityMainBinding;
-import com.deepaksharma.deepaksharma.authgoogle2.utils.Utilities;
+import com.deepaksharma.deepaksharma.authgoogle2.utils.Utilites;
 import com.deepaksharma.webaddicted.vo.UserModel;
 
 /**
@@ -14,7 +13,7 @@ import com.deepaksharma.webaddicted.vo.UserModel;
 public class SocialViewModel extends ViewModel {
 
     public void loginInfo(ActivityMainBinding activityMainBinding, UserModel userModel){
-        Utilities.showImage(activityMainBinding.imgUser, userModel.getImage());
+        Utilites.showImage(activityMainBinding.imgUser, userModel.getImage());
         activityMainBinding.txtUserInfo.setText(
                 "\n\nGoogle name -> " + userModel.getName() +
                         "\n\nGoogle email -> " + userModel.emailId +

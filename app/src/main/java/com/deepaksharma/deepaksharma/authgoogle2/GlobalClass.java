@@ -14,8 +14,8 @@ public class GlobalClass extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AppClass.init(this);
         mInstance = this;
-        AppClass.init(getApplicationContext());
     }
 
     public static GlobalClass getInstance() {

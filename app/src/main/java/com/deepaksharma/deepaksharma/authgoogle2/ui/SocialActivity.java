@@ -5,15 +5,18 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
+import android.support.v4.content.FileProvider;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.deepaksharma.deepaksharma.authgoogle2.R;
 import com.deepaksharma.deepaksharma.authgoogle2.databinding.ActivityMainBinding;
-import com.deepaksharma.deepaksharma.authgoogle2.utils.SocialConstant;
-import com.deepaksharma.deepaksharma.authgoogle2.utils.Utilities;
+import com.deepaksharma.deepaksharma.authgoogle2.ui.base.BaseActivity;
+import com.deepaksharma.deepaksharma.authgoogle2.constant.SocialConstant;
+import com.deepaksharma.deepaksharma.authgoogle2.utils.Utilites;
+import com.deepaksharma.webaddicted.auth.InstaShare;
 import com.deepaksharma.webaddicted.utils.AppClass;
 import com.deepaksharma.webaddicted.auth.FBAuth;
 import com.deepaksharma.webaddicted.auth.FBShare;
@@ -21,7 +24,9 @@ import com.deepaksharma.webaddicted.auth.GoogleAuth;
 import com.deepaksharma.webaddicted.auth.TwitterAuth;
 import com.deepaksharma.webaddicted.vo.UserModel;
 
-public class SocialActivity extends AppCompatActivity implements SocialLoginListener, FBShare.FbPostListener {
+import java.io.File;
+
+public class SocialActivity extends BaseActivity implements SocialLoginListener, FBShare.FbPostListener {
     String TAG = SocialActivity.class.getSimpleName();
     ActivityMainBinding activityMainBinding;
     SocialViewModel socialViewModel;
@@ -71,7 +76,7 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
 
     @Override
     public void onFBShare() {
-        if(FBAuth.isLoggedIn()) {
+        if (FBAuth.isLoggedIn()) {
 //        FBShare.init(SocialActivity.this).shareLink("https://github.com/webaddicted");
 //        FBShare.init(SocialActivity.this).shareLink("https://github.com/webaddicted", "#DEEPAK_SHARMA");
 //        new Handler().post(() -> {
@@ -84,8 +89,8 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
 //        }) ;
             Log.d(TAG, "onFBShare: " + myLogo.toString());
             FBShare.init(SocialActivity.this, this).shareImage(myLogo);
-        }else
-            Utilities.showToast("First login on facebook.");
+        } else
+            Utilites.showToast("First login on facebook.");
     }
 
     @Override
@@ -111,6 +116,7 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
 
     @Override
     public void onInstagram() {
+        selectFile();
     }
 
     @Override
@@ -136,21 +142,29 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
     }
 
     @Override
+    protected void onSelectedFile(File file) {
+        Utilites.showImagefromLocal(activityMainBinding.imgUser, file);
+        InstaShare.sharePost(this, file);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (AppClass.getLoginType()) {
-            case GOOGLE:
-                GoogleAuth.onActivityResult(requestCode, resultCode, data);
-                break;
-            case FACEBOOK:
-                FBAuth.activityResult(requestCode, resultCode, data);
-                break;
-            case FBSHARE:
-                FBShare.activityResult(requestCode, resultCode, data);
-                break;
-            case TWITTER:
-                TwitterAuth.onActivityResult(requestCode, resultCode, data);
-                break;
+        if (AppClass.getLoginType() != null) {
+            switch (AppClass.getLoginType()) {
+                case GOOGLE:
+                    GoogleAuth.onActivityResult(requestCode, resultCode, data);
+                    break;
+                case FACEBOOK:
+                    FBAuth.activityResult(requestCode, resultCode, data);
+                    break;
+                case FBSHARE:
+                    FBShare.activityResult(requestCode, resultCode, data);
+                    break;
+                case TWITTER:
+                    TwitterAuth.onActivityResult(requestCode, resultCode, data);
+                    break;
+            }
         }
     }
 
@@ -163,4 +177,6 @@ public class SocialActivity extends AppCompatActivity implements SocialLoginList
     public void onFbPostFailure(String error) {
         Log.d(TAG, "onFbPostFailure: " + error);
     }
+
+
 }
