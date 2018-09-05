@@ -56,8 +56,5 @@ dependencies {
 
     implementation project(':EasySocialLogin')
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
-    compile('com.twitter.sdk.android:twitter:1.11.0@aar') {
-        transitive = true;
-    }
 }
 apply plugin: 'com.google.gms.google-services'
