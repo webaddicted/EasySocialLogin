@@ -87,6 +87,10 @@ public class TwitterAuth {
     }
     private static void requestEmail(final Result<User> userResult) {
         final TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
+        User user = userResult.data;
+        String profileImage = user.profileImageUrl.replace("_normal", "");
+        final UserModel userModel = new UserModel(user.getId()+"", twitterSession.getAuthToken().token,user.name, "", profileImage, "", "");
+
         client.requestEmail(twitterSession, new Callback<String>() {
             @Override
             public void success(Result<String> emailResult) {
@@ -104,7 +108,7 @@ public class TwitterAuth {
 
             @Override
             public void failure(TwitterException e) {
-                mOnTwitterListener.onFailure(e.getMessage());
+                mOnTwitterListener.onSuccess(userModel);
             }
         });
     }

@@ -13,7 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.twitter.sdk.android.core.models.User;
 
 /**
  * Created by deepaksharma on 20/8/18.
@@ -23,42 +22,39 @@ public class GoogleAuth {
     private static String TAG = GoogleAuth.class.getSimpleName();
     private static final int RC_SIGN_IN = 123;
     private static onGoogleListener mOnGoogleListener;
+
     public static void init(Activity activity, String clientId, onGoogleListener onGoogleListener) {
         mOnGoogleListener = onGoogleListener;
         AppClass.setLoginType(LoginType.GOOGLE);
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(clientId)
-                .requestProfile()
-                .requestEmail()
-                .build();
-        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        activity.startActivityForResult(signInIntent, RC_SIGN_IN);
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(clientId)
+                    .requestProfile()
+                    .requestEmail()
+                    .build();
+            GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            activity.startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
 
     public static void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
-        }
+            handleSignInResult(result.getSignInAccount());
+        } else
+            mOnGoogleListener.onFailure(data.getDataString());
     }
 
-    private static void handleSignInResult(GoogleSignInResult result) {
-
-        if (result.isSuccess()) {
-            GoogleSignInAccount acct = result.getSignInAccount();
-            if (acct.getPhotoUrl() != null) {
-                UserModel userModel = new UserModel(acct.getId()+"", acct.getIdToken(), acct.getDisplayName(), acct.getEmail(), acct.getPhotoUrl().toString(), "", "");
-                Log.d(TAG, "handleSignInResult: DisplayName -> " + acct.getDisplayName() +
-                        "\n Email Id -> " + acct.getEmail() + "\n Id -> " + acct.getId() +
-                        "\n IdToken -> " + acct.getIdToken() + "\n Photo Url -> " + acct.getPhotoUrl() +
-                        "\n GivenName -> " + acct.getGivenName());
+    private static void handleSignInResult(GoogleSignInAccount account) {
+            if (account!=null && account.getPhotoUrl() != null) {
+                UserModel userModel = new UserModel(account.getId() + "", account.getIdToken(), account.getDisplayName(),
+                        account.getEmail(), account.getPhotoUrl().toString(), "", "");
+                Log.d(TAG, "handleSignInResult: DisplayName -> " + account.getDisplayName() +
+                        "\n Email Id -> " + account.getEmail() + "\n Id -> " + account.getId() +
+                        "\n IdToken -> " + account.getIdToken() + "\n Photo Url -> " + account.getPhotoUrl() +
+                        "\n GivenName -> " + account.getGivenName());
                 mOnGoogleListener.onSuccess(userModel);
             }
-        } else {
-            mOnGoogleListener.onFailure("Auth failed");
-            Log.d(TAG, "handleSignInResult: fail");
-        }
     }
 
     public static GoogleSignInClient isLogin(Activity activity) {
@@ -76,6 +72,7 @@ public class GoogleAuth {
 
     public interface onGoogleListener {
         void onSuccess(UserModel userModel);
+
         void onFailure(String errorMessage);
     }
 }

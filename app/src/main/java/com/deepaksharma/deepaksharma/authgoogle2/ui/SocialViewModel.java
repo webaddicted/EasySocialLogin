@@ -15,11 +15,11 @@ public class SocialViewModel extends ViewModel {
     public void loginInfo(ActivityMainBinding activityMainBinding, UserModel userModel){
         Utilites.showImage(activityMainBinding.imgUser, userModel.getImage());
         activityMainBinding.txtUserInfo.setText(
-                "\n\nGoogle name -> " + userModel.getName() +
-                        "\n\nGoogle email -> " + userModel.emailId +
-                        "\n\nGoogle birthday -> " + userModel.birthday +
-                        "\n\nGoogle Photo -> " + userModel.getImage() +
-                        "\n\nGoogle id -> " + userModel.getuId() +
-                        "\n\nGoogle token -> " + userModel.getAccess_token());
+                "\n\nName -> " + userModel.getName() +
+                        "\n\nEmail -> " + userModel.emailId +
+                        "\n\nBirthday -> " + userModel.birthday +
+                        "\n\nPhoto -> " + userModel.getImage() +
+                        "\n\nId -> " + userModel.getuId() +
+                        "\n\nToken -> " + userModel.getAccess_token());
     }
 }

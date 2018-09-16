@@ -82,7 +82,6 @@ public class FBAuth {
                     public void onCompleted(JSONObject object, GraphResponse response) {
 //                        Log.d(TAG, "onCompleted: "+object);
                         FbResponse fbResponse = fromJson(object.toString(), FbResponse.class);
-
                             Log.d(TAG, "onCompleted: str_facebookname -> " + fbResponse.getName() +
                                     "\n str_facebookemail -> " + fbResponse.getEmail() +
                                     "\n str_facebookid -> " + fbResponse.getId() +
@@ -93,7 +92,6 @@ public class FBAuth {
                     }
                 });
         Bundle parameters = new Bundle();
-//        parameters.putString("fields", "id, name,first_name,last_name,email,gender,birthday,picture");
         parameters.putString("fields", "id,name,first_name,last_name,gender,birthday,email,cover,picture.type(large),photos");
         request.setParameters(parameters);
         request.executeAsync();
@@ -137,9 +135,7 @@ public class FBAuth {
 
     public interface onFBListener {
         void onSuccess(UserModel userModel);
-
         void onFailure(String errorMessage);
-
     }
 
 }
